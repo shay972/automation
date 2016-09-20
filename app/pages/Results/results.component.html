@@ -1,0 +1,187 @@
+<div align="center"><h1> Results </h1>
+<a class="btn btn-success" (click)="refresh()" role="button"><i class="fa fa-refresh fa-2x" aria-hidden="true"></i></a>
+
+</div>
+
+<div *ngIf="isLoading">
+	<i class="fa fa-spinner fa-spin fa-3x"></i>
+</div>	
+	
+	
+<table class="table  table-sm table-striped table-bordered">
+	 <thead class="thead-inverse">
+		<tr>
+			<th>Group ID</th>
+			<th>Run Date</th>
+			<th>GW Model</th>
+			<th>GW IP</th>
+			<th>SS Ver</th>
+			<th>SSL card</th>
+			<th>Cipher</th>
+			<th>Product</th>
+			<th>GW Mode</th>
+			<th>Capping</th>
+			<th>Test Name</th>
+			<th>CPS</th>
+			<th>TPS</th>
+			<th>Throughput</th>
+			<th>RSAs</th>
+			<th>Latency</th>
+			<th>CPU</th>
+		</tr>
+		</thead>
+		 <thead>
+		<tr class="bg-info">
+			<th></th>
+			<th></th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'GatewayModel','eq',a2.value )" #a2>
+            	<option value="">GW Model...</option>
+            	<option value="X1000">X1000</option>
+				<option value="X1010">X1010</option>
+				<option value="X1020">X1020</option>
+				<option value="X2000">X2000</option>
+				<option value="X2010">X2010</option>
+				<option value="X2020">X2020</option>
+				<option value="X2500">X2500</option>
+				<option value="X2510">X2510</option>
+				<option value="X4510">X4510</option>
+				<option value="X6500">X6500</option>
+				<option value="X6510">X6510</option>
+				<option value="X8510">X8510</option>
+				<option value="X10K">X10K</option>
+       			</select>
+			</th>	
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'GatewayIP','eq',a3.value )" #a3>
+            	<option value="">GW IP...</option>
+            	<option *ngFor="let test3 of gatewayIP" value="{{ test3 }}">
+                {{ test3 }}
+            	</option>
+       			</select>
+			</th>	
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'SSVer','eq',a1.value )" #a1>
+            	<option value="">SS Ver...</option>
+                <option *ngFor="let test1 of ssVer" value="{{ test1 }}">
+                {{ test1 }}
+				</option>
+       			</select>
+			</th>	
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'SSLCard','eq',a5.value )" #a5>
+            	<option value="">SSL Card</option>
+            	<option value="yes">Yes</option>
+				<option value="no">No</option>
+				</select>
+			</th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'Cipher','eq',a6.value )" #a6>
+            	<option value="">Cipher</option>
+            	<option value="md5">md5</option>
+				</select>
+			</th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'Product','eq',a7.value )" #a7>
+            	<option value="">Product</option>
+            	<option value="WAF">WAF</option>
+				<option value="Oracle">Oracle</option>
+				<option value="Mssql">Mssql</option>
+				<option value="DB2">DB2</option>
+				</select>
+			</th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'GwMode','eq',a8.value )" #a8>
+            	<option value="">GW Mode</option>
+            	<option value="bridge-impvha">bridge-impvha</option>
+				<option value="trp">trp</option>
+				<option value="krp">krp</option>
+				</select>
+			</th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'Capping','eq',a9.value )" #a9>
+            	<option value="">Capping</option>
+            	<option value="yes">Yes</option>
+				<option value="no">No</option>
+				</select>
+			</th>
+			<th>
+				<select class="form-control-sm" (change)="reloadPosts( 'TestName','eq',a4.value )" #a4>
+            	<option value="">Test name...</option>
+            	<option *ngFor="let test4 of testName" value="{{ test4 }}">
+                {{ test4 }}
+            	</option>
+       			</select>
+			</th>
+			<th></th>
+		 	<th></th>
+		 	<th></th>
+		 	<th></th>
+		 	<th></th>
+		 	<th></th>
+		</tr>		
+	</thead>
+	<tbody>
+		<tr class="table-success" *ngFor="let test of tests">
+			<td>{{ test.GroupID }}</td>
+			<td>{{ test.RunDate }}</td>
+			<td>{{ test.GatewayModel }}</td>
+			<td>{{ test.GatewayIP }}</td>
+			<td>{{ test.SSVer }}</td>
+			<td>{{ test.SSLCard }}</td>
+			<td>{{ test.Cipher }}</td>
+			<td>{{ test.Product }}</td>
+			<td>{{ test.GwMode }}</td>
+			<td>{{ test.Capping }}</td>
+			<td>{{ test.TestName }}</td>
+			<td>{{ test.CPS }}</td>
+			<td>{{ test.TPS }}</td>
+			<td>{{ test.Throughput }}</td>
+			<td>{{ test.RSAs }}</td>
+			<td>{{ test.Latency }}</td>
+			<td>{{ test.CPU }}</td>
+		</tr>
+	</tbody>
+</table> 
+
+<div class="row" align="center">
+    	<nav *ngIf="NumOfRecords > pageSize">
+		 <ul class="pagination" (page-changed)="onPageChanged($event)">
+
+        	<li class="page-item">
+				<a class="page-link" (click)="previous()" aria-label="Previous">
+        			<span aria-hidden="true">&laquo;</span>
+       			</a>
+    	 	</li>
+
+			<span *ngFor="let page of pages">
+				<template [ngIf]="page==currentPage">
+	        		<li class="page-item active"> <a class="page-link" (click)="changePage(page)">{{ page }} </a> </li>
+				</template>
+				<template [ngIf]="page!=currentPage">
+	        		<li class="page-item"><a class="page-link" (click)="changePage(page)">{{ page }} </a> </li>
+				</template>		
+  			</span>		
+
+            <li class="page-item">
+                <a class="page-link" (click)="next()" aria-label="Next">
+               		<span aria-hidden="true">&raquo;</span>
+        	
+                </a>
+            </li> 
+        </ul>
+       </nav>  
+    </div> 
+
+<template [ngIf]="NumOfRecords > 0">
+ <table class="table table-border">
+	 <tr>
+		 <td>
+			<my-chart-bar></my-chart-bar>
+		 </td>
+		 <td>	
+			<my-chart-doughnut></my-chart-doughnut>
+		 </td>	
+	 </tr>
+ </table>
+</template>
